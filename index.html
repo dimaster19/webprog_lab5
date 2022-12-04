@@ -259,9 +259,17 @@
 
  </div>
 
+ <!-- Form validation -->
+<div class="container mt-5 mb-5 d-block p-5 text-center"  style="background-color: white;">
+  <p>email</p>
+  <input type="email" id = "email" placeholder = "Введите email"  style="width: 300px; height: 50px; border-radius: 10px; padding: 10px; margin-bottom: 20px;" onkeydown="emailValidation()">
+  <p id = "emailVal" style="color: red; display: none;" > Введите корректный email</p>
+  <p>password</p>
+  <input type="password" id = "password" placeholder = "Введите пароль"  style="width: 300px; height: 50px; border-radius: 10px; padding: 10px; margin-bottom: 20px;" onkeydown="passValidation()">
+  <p id = "passVal" style="color: red; display: none;" >Пароль должен быть от 6 до 16 символов, иметь разные регистры, цифры и спец. символы</p>
+</div>
 
-
-   <div class="container mt-5 mb-5" style="display: block; text-align: center; width: 100%;">
+   <div class="container mt-5 mb-5 " style="display: block; text-align: center; width: 100%;">
     <h1>Отзывы</h1>
     <div class="testimonial-slide-three-wrapper py-3"  style = "border-radius: 6px; background-color: #ffffff;">
         <div class="testimonial-slide3 testimonial-style3">
@@ -442,7 +450,8 @@
       </div>
     </div>
   </div>
-  
+    
+ 
   
     <!-- All JavaScript Files -->
     <script src="js/style.js"></script>
@@ -458,203 +467,12 @@
     <script src="js/magic-grid.min.js"></script>
     <script src="js/dark-rtl.js"></script>
     <script src="js/active.js"></script>
-    
+    <script src="./js/lab5.js"></script>
     
     <!-- PWA -->
     <script src="js/pwa.js"></script>
  
-    <!-- Пусть будет тут, и так файлов js овер много -->
-
-    <!-- Slider -->
-    <script type="text/javascript">
-        "use strict";
-      var slideIndex = 1;
-      var timer = null;
-      showSlides(slideIndex);
-
-      afterTime(4000);
-      function plusSlides(n) {
-        showSlides(slideIndex += n);
-      }
-     
-      function currentSlide(n) {
-        showSlides(slideIndex = n);
-      }
-      
-      function showSlides(n) {
-        let i;
-        let slides = document.getElementsByClassName("slider-item");
-        let dots = document.getElementsByClassName("dot");
-        if (n > slides.length) {slideIndex = 1}    
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";  
-        }
-        for (i = 0; i < dots.length; i++) {
-          dots[i].className = dots[i].className.replace(" active1", "");
-        }
-        if (slideIndex > slides.length) {
-                slideIndex = 1;
-            }
- 
-            if (slideIndex <= 0) slideIndex = slides.length; 
-
-        slides[slideIndex-1].style.display = "block";  
-        dots[slideIndex-1].className += " active1";
-        afterTime(4000);
-      }
-      function afterTime(delay) { 
-            clearInterval(timer);
-            timer = setInterval(() => {
-                slideIndex++;
-                showSlides();
-            }, delay);
-        }
-
-        // Menu
-        function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-
-        tabcontent = document.getElementsByClassName("mytabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-          tabcontent[i].style.display = "none";
-        }
-
-        tablinks = document.getElementsByClassName("mytablinks");
-        for (i = 0; i < tablinks.length; i++) {
-          tablinks[i].className = tablinks[i].className.replace(" active3", "");
-        }
-
-        document.getElementById(tabName).style.display = "flex";
-        evt.currentTarget.className += " active3";
-      }
-
-      // Price Range Slider
-      const sliders = document.querySelectorAll('input[type="range"]');
-      var p;
-      p = document.getElementById('price-slider-value');
-      sliders[0].addEventListener('input', (e) => {
-      if(+sliders[0].value > +sliders[1].value){
-          sliders[1].value = +sliders[0].value;
-        }
-      });
-
-      sliders[1].addEventListener('input', (e) => {
-      if(+sliders[1].value < +sliders[0].value){
-          sliders[0].value = +sliders[1].value;
-        }
-      });
-
-      sliders.forEach((slider) => {
-        slider.addEventListener('change', () => {
-          // console.log(`from ${sliders[0].value} to ${sliders[1].value}`);
-          p.innerHTML = `От ${sliders[0].value} до ${sliders[1].value}`;
-        })
-      });
-    </script>
-
-<script>
-  function magnify(imgID, zoom) {
-  var img, glass, w, h, bw;
-  img = document.getElementById(imgID);
-
-  /* Создать увеличительное стекло: */
-  glass = document.createElement("DIV");
-  glass.setAttribute("class", "img-magnifier-glass");
-
-  /* Вставить увеличительное стекло: */
-  img.parentElement.insertBefore(glass, img);
-
-  /* Установите свойства фона для стекла лупы: */
-  glass.style.backgroundImage = "url('" + img.src + "')";
-  glass.style.backgroundRepeat = "no-repeat";
-  glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
-  bw = 3;
-  w = glass.offsetWidth / 2;
-  h = glass.offsetHeight / 2;
-
-  /* Выполните функцию, когда кто-то перемещает лупу по изображению: */
-  glass.addEventListener("mousemove", moveMagnifier);
-  img.addEventListener("mousemove", moveMagnifier);
-
-  /* а также для сенсорных экранов: */
-  glass.addEventListener("touchmove", moveMagnifier);
-  img.addEventListener("touchmove", moveMagnifier);
-  function moveMagnifier(e) {
-  var pos, x, y;
-  /* Предотвратите любые другие действия, которые могут возникнуть при перемещении по изображению */
-  e.preventDefault();
-  /* Получить позиции курсора x и y: */
-  pos = getCursorPos(e);
-  x = pos.x;
-  y = pos.y;
-  /* Не допускайте, чтобы лупа находилась вне изображения: */
-  if (x > img.width - (w / zoom)) {x = img.width - (w / zoom);}
-  if (x < w / zoom) {x = w / zoom;}
-  if (y > img.height - (h / zoom)) {y = img.height - (h / zoom);}
-  if (y < h / zoom) {y = h / zoom;}
-  /* Установите положение стекла лупы: */
-  glass.style.left = (x - w) + "px";
-  glass.style.top = (y - h) + "px";
-  /* Покажите, что такое увеличительное стекло "смотреть": */
-  glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
-  }
-
-  function getCursorPos(e) {
-  var a, x = 0, y = 0;
-  e = e || window.event;
-  /* Получить x и y позиции изображения: */
-  a = img.getBoundingClientRect();
-  /* Вычислите координаты курсора x и y относительно изображения: */
-  x = e.pageX - a.left;
-  y = e.pageY - a.top;
-  /* Consider any page scrolling: */
-  x = x - window.pageXOffset;
-  y = y - window.pageYOffset;
-  return {x : x, y : y};
-  }
-  }
-</script>
-<script>
-  /* Выполните функцию увеличения: */
-  magnify("myimage", 3);
-  /* Укажите идентификатор изображения и прочность стекла лупы: */
-</script>
-
-<script>
-	var modal = document.getElementById('modal');
-	var btn = document.getElementById('openButton');
-	var closebtn = document.getElementById('closeButton');
-
-	btn.onclick = function	() {
-		modal.style.display = "block";
-	}
-	closebtn.onclick = function	() {
-		modal.style.display = "none";
-	}
-</script>
-
-<script>
-	var title = document.getElementsByClassName('accordion-title');
-    var cont = document.getElementsByClassName('accordion-cont');
-	cont[0].style.maxHeight = cont[0].scrollHeight + "px";
-	setTimeout(()=> {
-        for (let i = 0; i < cont.length; i++) {
-            cont[i].style.transition = 'all 1s';
-        }
-    }, 1000
-)
-	for (var i = 0; i < title.length; i++) {
-		title[i].addEventListener('click', function() {
-			if (!(this.classList.contains('active'))) {
-				for(var i = 0; i < title.length; i++) {
-					title[i].classList.remove('active');
-				}
-				this.classList.add('active');
-			}
-		})
-	}
-</script>
+    
 </body>
 
 <footer>
